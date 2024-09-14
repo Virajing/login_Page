@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Data to Google Sheets</title>
+    <style>
+       /* Global styles */
+:root {
+  --primary-color: #4CAF50;  /* Primary color for buttons and highlights */
+  --secondary-color: #f9f9f9;  /* Background color for form */
+  --text-color: #333;  /* Main text color */
+  --border-radius: 8px;  /* Rounded corners for inputs */
+  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --transition-speed: 0.3s;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 20px;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+form {
+  background-color: var(--secondary-color);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 400px;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+  outline: none;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+button:hover {
+  background-color: #45a049;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  form {
+    padding: 15px;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  input,
+  button {
+    font-size: 1rem;
+  }
+}
+
+    </style>
+</head>
+<body>
+    <h2>Login</h2>
+    <form id="dataForm">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" required><br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" required><br>
+        <label for="age">Age:</label><br>
+        <input type="number" id="age" required><br><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        const form = document.getElementById('dataForm');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const age = document.getElementById('age').value;
+
+            // Google Form action URL (replace with your form's action URL)
+            const googleFormActionURL = 'https://script.google.com/macros/s/AKfycbwOOrx0eGHmvrDplKi-ImI8o63QbY0UT9oB7V2iWyFodGZzk0g1bg6gQHUbTzFwkjdHFA/exec';
+
+            // Create form data for Google Form
+            const formData = new FormData();
+            formData.append('entry.1234567890', name);  // Replace with your Google Form's entry ID for 'name'
+            formData.append('entry.0987654321', email); // Replace with your Google Form's entry ID for 'email'
+            formData.append('entry.1112131415', age);   // Replace with your Google Form's entry ID for 'age'
+
+            // Submit form data to Google Form
+            fetch(googleFormActionURL, {
+                method: 'POST',
+                mode: 'no-cors', // 'no-cors' prevents errors from showing, but data will still be submitted
+                body: formData
+            })
+            .then(() => {
+                alert('Data submitted successfully!');
+                form.reset(); // Clear form after submission
+            })
+            .catch((error) => {
+                alert('Error submitting data. Please try again.');
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
