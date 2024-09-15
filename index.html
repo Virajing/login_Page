@@ -51,7 +51,8 @@ label {
 
 input[type="text"],
 input[type="email"],
-input[type="number"] {
+input[type="number"], 
+input[type="password"] {
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
@@ -64,7 +65,8 @@ input[type="number"] {
 
 input[type="text"]:focus,
 input[type="email"]:focus,
-input[type="number"]:focus {
+input[type="number"]:focus, 
+input[type="password"]:focus {
   border-color: var(--primary-color);
   box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
   outline: none;
@@ -114,8 +116,14 @@ button:active {
     <form id="dataForm">
         <label for="name">Name:</label><br>
         <input type="text" id="name" required><br>
+        <label for="fatherName">Father's Name:</label><br>
+        <input type="text" id="fatherName" required><br>
+        <label for="phoneNumber">Phone Number:</label><br>
+        <input type="number" id="phoneNumber" required><br>
         <label for="email">Email:</label><br>
         <input type="email" id="email" required><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" required><br>
         <label for="age">Age:</label><br>
         <input type="number" id="age" required><br><br>
         <button type="submit">Submit</button>
@@ -129,17 +137,23 @@ button:active {
             
             // Get form values
             const name = document.getElementById('name').value;
+            const fatherName= document.getElementById('fatherName').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
             const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
             const age = document.getElementById('age').value;
 
             // Google Form action URL (replace with your form's action URL)
-            const googleFormActionURL = 'https://script.google.com/macros/s/AKfycbwOOrx0eGHmvrDplKi-ImI8o63QbY0UT9oB7V2iWyFodGZzk0g1bg6gQHUbTzFwkjdHFA/exec';
+            const googleFormActionURL = 'https://script.google.com/macros/s/AKfycbzejvWo3PsTorwUylK2PTBAeG2fh_sCz2ELy7vF8DMgawadoLFBDTZYPM1iY6MtHhnTgQ/exec';
 
             // Create form data for Google Form
             const formData = new FormData();
             formData.append('entry.1234567890', name);  // Replace with your Google Form's entry ID for 'name'
-            formData.append('entry.0987654321', email); // Replace with your Google Form's entry ID for 'email'
-            formData.append('entry.1112131415', age);   // Replace with your Google Form's entry ID for 'age'
+            formData.append('entry.9876543210', fatherName);  // Replace with your Google Form's entry ID for 'fatherName'
+            formData.append('entry.1122334455', phoneNumber);  // Replace with your Google Form's entry ID for 'phoneNumber'
+            formData.append('entry.5544332211', email); // Replace with your Google Form's entry ID for 'email'
+            formData.append('entry.6677889900', password); // Replace with your Google Form's entry ID for 'password'
+            formData.append('entry.9998887776', age);   // Replace with your Google Form's entry ID for 'age'
 
             // Submit form data to Google Form
             fetch(googleFormActionURL, {
